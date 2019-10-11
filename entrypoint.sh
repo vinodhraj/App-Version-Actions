@@ -1,5 +1,13 @@
 #!/bin/sh -l
+input_file=$1
+echo "\nInput file: $input_file"
 
-echo "Hello $1"
-time=$(date)
-echo ::set-output name=time::$time
+
+if test -f $input_file; then
+    content=$(cat $input_file)
+else
+    content=$(echo "-- File doesn't exist --")
+fi
+
+echo "\n$content"
+echo "\nEnd of Action\n\n"

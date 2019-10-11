@@ -1,16 +1,16 @@
 # action.yml
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'App Version Actions'
+description: 'Version operations'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  given_file_name:  # id of input
+    description: 'Name of the version file'
     required: true
-    default: 'World'
+    default: 'version'
 outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  app_version: # id of output
+    description: 'Version from given file'
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.who-to-greet }}
+    - ${{ inputs.given_file_name }}
