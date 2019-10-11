@@ -15,6 +15,14 @@ Updated version.
 
 ## Example usage
 
-uses: vinodhraj/app-version-actions@v1
-with:
-  file_name: 'version.txt'
+jobs:
+  Version-check:
+    runs-on: ubuntu-latest
+    name: App Version
+    steps:
+    - uses: actions/checkout@master
+    - name: Display version
+      id: version
+      uses: vinodhraj/app-version-actions@v1
+      with:
+        file_name: './version'
