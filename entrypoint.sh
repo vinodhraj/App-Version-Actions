@@ -1,10 +1,10 @@
 #!/bin/sh -l
-input_file=$1
-echo "\nInput file: $input_file"
+file_name=$1
+echo "\nInput file: $file_name"
 
 
-if test -f $input_file; then
-    content=$(cat $input_file)
+if test -f $file_name; then
+    content=$(cat $file_name)
 else
     content=$(echo "-- File doesn't exist --")
 fi
