@@ -2,7 +2,7 @@
 name: 'App Version Actions'
 description: 'Version operations'
 inputs:
-  given_file_name:  # id of input
+  file_name:  # id of input
     description: 'Name of the version file'
     required: true
     default: 'version'
@@ -13,4 +13,4 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.given_file_name }}
+    - ${{ inputs.file_name }}
