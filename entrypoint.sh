@@ -15,12 +15,12 @@ regex="^(v|ver|version|V|VER|VERSION)|(\s*)|([0-9]{1,2}(\.+)){3}([0-9]{1,3})$"
 #ld="[0-9]$"
 #echo $regex
 
-if [[ $content =~ $regex ]]; then 
-    echo "\nValid Version string found\n"
-else
-    echo "\nInvalid Version string\n"
-    exit 1
-fi
+#if [[ $content =~ $regex ]]; then 
+#    echo "\nValid Version string found\n"
+#else
+#    echo "\nInvalid Version string\n"
+#    exit 1
+#fi
 
 major=$(echo $content | cut -d'.' -f1) 
 major=${major:(-2)}
