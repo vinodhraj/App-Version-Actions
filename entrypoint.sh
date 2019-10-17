@@ -1,4 +1,5 @@
 #!/bin/sh -l
+
 file_name=$1
 echo "\nInput file name: $file_name"
 
@@ -12,15 +13,22 @@ fi
 echo "File Content:\n$content"
 
 regex="^(v|ver|version|V|VER|VERSION)|(\s*)|([0-9]{1,2}(\.+)){3}([0-9]{1,3})$"
-#ld="[0-9]$"
-#echo $regex
 
-#if [[ $content =~ $regex ]]; then 
-#    echo "\nValid Version string found\n"
-#else
-#    echo "\nInvalid Version string\n"
-#    exit 1
-#fi
+#^([0-9]{1,2})+[.]+([0-9]{1,2})+[.]+([0-9]{1,2})
+#echo "ver 0.0.12.456" | 
+#awk '/(v|ver|version|V|VER|VERSION)?([0-9]{1,2})+[.]+([0-9]{1,2})+[.]+([0-9]{1,3})|[.]+([0-9]{1,3})$/{print $0}' version
+#echo "$ver" | grep "(v|ver|version|V|VER|VERSION)?([0-9]{1,2})+[.]+([0-9]{1,2})+[.]+([0-9]{1,3})|[.]+([0-9]{1,3})*$")
+
+extract_string=$(awk '/^(v|ver|version|V|VER|VERSION)?[[:blank:]]*([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{1,3})(\.([0-9]{1,3}))?$/{print $0}' $file_name)
+echo $extract_string
+
+
+if [[ $content = $extract_string ]]; then 
+    echo "\nValid Version string found\n"
+else
+    echo "\nInvalid Version string\n"
+    exit 1
+fi
 
 major=$(echo $content | cut -d'.' -f1) 
 major=${major:(-2)}
@@ -28,16 +36,21 @@ minor=$(echo $content | cut -d'.' -f2)
 patch=$(echo $content | cut -d'.' -f3)
 build=$(echo $content | cut -d'.' -f4)
 
-oldver=$(echo $major.$minor.$patch.$build)
-echo "\nOld Ver: $oldver"
 
 #echo $major 
 #echo $minor
 #echo $patch
-build=$(expr $build + 1)
-#echo $build
 
-newver=$(echo $major.$minor.$patch.$build)
+if [[ $build = "" ]]; then
+    oldver=$(echo $major.$minor.$patch)
+    patch=$(expr $patch + 1)
+    newver=$(echo $major.$minor.$patch)
+else
+    oldver=$(echo $major.$minor.$patch.$build)
+    build=$(expr $build + 1)
+    newver=$(echo $major.$minor.$patch.$build)
+fi
+echo "\nOld Ver: $oldver"
 
 echo "\nUpdated version: $newver" 
 
