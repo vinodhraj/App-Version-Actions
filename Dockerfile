@@ -1,6 +1,9 @@
 # Container image that runs your code
 FROM alpine:3.10
 
+# Install git package
+RUN apt-get update && apt-get install -y --no-install-recommends -y git
+
 # Copies your code file from your action repository to the filesystem path `/` of the container
 COPY entrypoint.sh /entrypoint.sh
 
