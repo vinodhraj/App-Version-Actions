@@ -58,5 +58,14 @@ newcontent=$(echo ${content/$oldver/$newver})
 
 echo $newcontent > $file_name
 
+echo "\nStarting Git Operations"
+git add -A 
+git commit -m "Incremented to ${newver}"  -m "[skip ci]"
+#[ -n "$INPUT_PREFIX" ] && (git tag -a "${INPUT_PREFIX}_${VERSION}" -m "[skip ci]") || (git tag -a "${VERSION}" -m "[skip ci]")
+
+git show-ref
+git push --follow-tags "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:master
+
+
 echo "\nEnd of Action\n\n"
 exit 0
