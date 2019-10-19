@@ -66,7 +66,7 @@ git config --global user.name "Mobile App Versioner"
 
 git add -A 
 git commit -m "Incremented to ${newver}"  -m "[skip ci]"
-([ -n "$tag_version" ] && [ -z "$tag_version" = "true"]) && (git tag -a "${newver}" -m "[skip ci]")
+([ -n "$tag_version" ] && [ -z "$tag_version" = "true" ]) && (git tag -a "${newver}" -m "[skip ci]") || echo "No tag created"
 
 git show-ref
 git push --follow-tags "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:${GITHUB_REF}
