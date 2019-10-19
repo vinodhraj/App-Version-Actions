@@ -6,6 +6,10 @@ inputs:
     description: 'Name of the version file'
     required: true
     default: 'version'
+  tag_version: # id
+    description: 'States whether to create tag for this version or not'
+    required: false
+    default: 'false'
 outputs:
   app_version: # id of output
     description: 'Version from given file'
@@ -13,4 +17,4 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.file_name }}
+    - ${{ inputs.file_name }} ${{ inputs.tag_version }}

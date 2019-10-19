@@ -1,8 +1,10 @@
 #!/bin/sh -l
 
 file_name=$1
-echo "\nInput file name: $file_name"
+tag_version=$2
+echo "\nInput file name: $file_name : $tag_version"
 
+([ -z "$GITHUB_ONLY_ON_COMMIT" ]) || exit 0
 
 if test -f $file_name; then
     content=$(cat $file_name)
@@ -59,12 +61,12 @@ newcontent=$(echo ${content/$oldver/$newver})
 echo $newcontent > $file_name
 
 echo "\nStarting Git Operations"
-git config --global user.email "you@example.com"
-git config --global user.name "App Versioner"
+git config --global user.email "MobileAppVersioner@github-action.com"
+git config --global user.name "Mobile App Versioner"
 
 git add -A 
 git commit -m "Incremented to ${newver}"  -m "[skip ci]"
-#[ -n "$INPUT_PREFIX" ] && (git tag -a "${INPUT_PREFIX}_${VERSION}" -m "[skip ci]") || (git tag -a "${VERSION}" -m "[skip ci]")
+([ -n "$tag_version" ] && [ -z "$tag_version" = "true"]) && (git tag -a "${newver}" -m "[skip ci]")
 
 git show-ref
 git push --follow-tags "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:${GITHUB_REF}
