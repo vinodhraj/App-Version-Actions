@@ -1,5 +1,6 @@
 #!/bin/sh -l
 
+echo "Shell : $SHELL"
 file_name=$1
 tag_version=$2
 echo "\nInput file name: $file_name : $tag_version"
@@ -7,25 +8,27 @@ echo "\nInput file name: $file_name : $tag_version"
 ([ -z "$GITHUB_ONLY_ON_COMMIT" ]) || exit 0
 
 if test -f $file_name; then
+    echo "\nReading file"
     content=$(cat $file_name)
+    echo "\nFile read"
 else
     content=$(echo "-- File doesn't exist --")
 fi
 
-echo "File Content:\n$content"
+echo "File Content: $content"
 
-regex="^(v|ver|version|V|VER|VERSION)|(\s*)|([0-9]{1,2}(\.+)){3}([0-9]{1,3})$"
+#regex="^(v|ver|version|V|VER|VERSION)|(\s*)|([0-9]{1,2}(\.+)){3}([0-9]{1,3})$"
 
 #^([0-9]{1,2})+[.]+([0-9]{1,2})+[.]+([0-9]{1,2})
 #echo "ver 0.0.12.456" | 
 #awk '/(v|ver|version|V|VER|VERSION)?([0-9]{1,2})+[.]+([0-9]{1,2})+[.]+([0-9]{1,3})|[.]+([0-9]{1,3})$/{print $0}' version
 #echo "$ver" | grep "(v|ver|version|V|VER|VERSION)?([0-9]{1,2})+[.]+([0-9]{1,2})+[.]+([0-9]{1,3})|[.]+([0-9]{1,3})*$")
 
-extract_string=$(awk '/^(v|ver|version|V|VER|VERSION)?[[:blank:]]*([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{1,3})(\.([0-9]{1,3}))?$/{print $0}' $file_name)
-echo $extract_string
+extract_string=$(awk '/^([[:blank:]]|^$)*(v|ver|version|V|VER|VERSION)?([[:blank:]])*([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{1,3})(\.([0-9]{1,3}))?$/{print $0}' $file_name)
+echo "Extracted string: $extract_string"
 
 
-if [[ $content = $extract_string ]]; then 
+if [[ $extract_string != "" ]]; then 
     echo "\nValid Version string found\n"
 else
     echo "\nInvalid Version string\n"
