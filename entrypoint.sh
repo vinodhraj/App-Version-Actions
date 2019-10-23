@@ -1,6 +1,6 @@
 #!/bin/sh -l
 
-echo "Shell : $SHELL"
+#echo "Shell : $SHELL"
 file_name=$1
 tag_version=$2
 echo "\nInput file name: $file_name : $tag_version"
@@ -22,7 +22,7 @@ echo "File Content: $content"
 #awk '/(v|ver|version|V|VER|VERSION)?([0-9]{1,2})+[.]+([0-9]{1,2})+[.]+([0-9]{1,3})|[.]+([0-9]{1,3})$/{print $0}' version
 #echo "$ver" | grep "(v|ver|version|V|VER|VERSION)?([0-9]{1,2})+[.]+([0-9]{1,2})+[.]+([0-9]{1,3})|[.]+([0-9]{1,3})*$")
 
-extract_string=$(awk '/^([[:space:]])*(v|ver|version|V|VER|VERSION)?([[:blank:]])*([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{1,3})(\.([0-9]{1,3}))?[[:space:]]*$/{print $0}' $file_name)
+extract_string=$(echo $content | awk '/^([[:space:]])*(v|ver|version|V|VER|VERSION)?([[:blank:]])*([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{1,3})(\.([0-9]{1,3}))?[[:space:]]*$/{print $0}')
 echo "Extracted string: $extract_string"
 
 
