@@ -8,9 +8,7 @@ echo "\nInput file name: $file_name : $tag_version"
 ([ -z "$GITHUB_ONLY_ON_COMMIT" ]) || exit 0
 
 if test -f $file_name; then
-    echo "\nReading file"
     content=$(cat $file_name)
-    echo "\nFile read"
 else
     content=$(echo "-- File doesn't exist --")
 fi
@@ -24,7 +22,7 @@ echo "File Content: $content"
 #awk '/(v|ver|version|V|VER|VERSION)?([0-9]{1,2})+[.]+([0-9]{1,2})+[.]+([0-9]{1,3})|[.]+([0-9]{1,3})$/{print $0}' version
 #echo "$ver" | grep "(v|ver|version|V|VER|VERSION)?([0-9]{1,2})+[.]+([0-9]{1,2})+[.]+([0-9]{1,3})|[.]+([0-9]{1,3})*$")
 
-extract_string=$(awk '/^([[:space:]])*(v|ver|version|V|VER|VERSION)?([[:blank:]])*([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{1,3})(\.([0-9]{1,3}))?$/{print $0}' $file_name)
+extract_string=$(awk '/^([[:space:]])*(v|ver|version|V|VER|VERSION)?([[:blank:]])*([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{1,3})(\.([0-9]{1,3}))?[[:space:]]*$/{print $0}' $file_name)
 echo "Extracted string: $extract_string"
 
 
@@ -32,14 +30,14 @@ if [[ $extract_string != "" ]]; then
     echo "\nValid Version string found\n"
 else
     echo "\nInvalid Version string\n"
-    exit 1
+    exit 0
 fi
 
-major=$(echo $content | cut -d'.' -f1) 
+major=$(echo $extract_string | cut -d'.' -f1) 
 major=${major:(-2)}
-minor=$(echo $content | cut -d'.' -f2)
-patch=$(echo $content | cut -d'.' -f3)
-build=$(echo $content | cut -d'.' -f4)
+minor=$(echo $extract_string | cut -d'.' -f2)
+patch=$(echo $extract_string | cut -d'.' -f3)
+build=$(echo $extract_string | cut -d'.' -f4)
 
 
 #echo $major 
