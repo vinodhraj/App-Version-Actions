@@ -26,12 +26,12 @@ extract_string=$(echo $content | awk '/^([[:space:]])*(v|ver|version|V|VER|VERSI
 echo "Extracted string: $extract_string"
 
 
-#if [[ $extract_string != "" ]]; then 
-#    echo "\nValid Version string found\n"
-#else
-#    echo "\nInvalid Version string\n"
-#    exit 0
-#fi
+if [[ $extract_string != '' ]]; then 
+    echo "\nValid Version string found\n"
+else
+    echo "\nInvalid Version string\n"
+    exit 0
+fi
 
 major=$(echo $extract_string | cut -d'.' -f1) 
 major=${major:(-2)}
