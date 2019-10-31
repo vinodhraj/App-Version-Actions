@@ -16,9 +16,9 @@ echo "Git Event Name: ${GITHUB_EVENT_NAME}"
 
 github_ref=""
 if [[ "$GITHUB_HEAD_REF" == ""]]; then
-    github_ref="echo ${GITHUB_REF}"
+    github_ref=$GITHUB_REF
 else
-    github_ref="echo ${GITHUB_HEAD_REF}"
+    github_ref=$GITHUB_HEAD_REF
 fi
 echo "Git ref: $github_ref  ::  ${GITHUB_REF}"
 
