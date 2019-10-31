@@ -15,7 +15,9 @@ echo "Git Event Name: ${GITHUB_EVENT_NAME}"
 #([ -z "$GITHUB_ONLY_ON_COMMIT" ]) || exit 0
 
 github_ref=""
-if [[ "${GITHUB_EVENT_NAME}" = "push"]]; then
+
+if test "${GITHUB_EVENT_NAME}" = "push"
+then
     echo "Push event"
     github_ref=${GITHUB_REF}
 else
