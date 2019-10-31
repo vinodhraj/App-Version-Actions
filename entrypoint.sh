@@ -4,7 +4,11 @@
 file_name=$1
 tag_version=$2
 echo "\nInput file name: $file_name : $tag_version"
-echo "Git ref: ${github.ref}"
+echo "Git Head Ref: ${GITHUB_HEAD_REF}"
+echo "Git Base Ref: ${GITHUB_BASE_REF}"
+echo "Git Event Path: ${GITHUB_EVENT_PATH}"
+echo "Event path contents:\n"
+cat ${GITHUB_EVENT_PATH}
 
 ([ -z "$GITHUB_ONLY_ON_COMMIT" ]) || exit 0
 
