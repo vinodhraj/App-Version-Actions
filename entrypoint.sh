@@ -1,4 +1,5 @@
 #!/bin/sh -l
+set -e
 
 #echo "Shell : $SHELL"
 file_name=$1
@@ -11,6 +12,9 @@ echo "Event path contents:\n"
 cat ${GITHUB_EVENT_PATH}
 
 ([ -z "$GITHUB_ONLY_ON_COMMIT" ]) || exit 0
+
+git pull --commit --no-edit https://${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+git checkout ${GITHUB_HEAD_REF}
 
 if test -f $file_name; then
     content=$(cat $file_name)
@@ -75,7 +79,7 @@ git commit -m "Incremented to ${newver}"  -m "[skip ci]"
 ([ -n "$tag_version" ] && [ "$tag_version" = "true" ]) && (git tag -a "${newver}" -m "[skip ci]") || echo "No tag created"
 
 git show-ref
-git push --follow-tags "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:${GITHUB_SHA}
+git push --follow-tags "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:${GITHUB_BASE_REF}
 
 
 echo "\nEnd of Action\n\n"
