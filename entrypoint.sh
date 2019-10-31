@@ -4,6 +4,7 @@
 file_name=$1
 tag_version=$2
 echo "\nInput file name: $file_name : $tag_version"
+echo "Git ref: ${github.ref}"
 
 ([ -z "$GITHUB_ONLY_ON_COMMIT" ]) || exit 0
 
