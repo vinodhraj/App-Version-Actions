@@ -83,7 +83,7 @@ git commit -m "Incremented to ${newver}"  -m "[skip ci]"
 
 git show-ref
 echo "Git Push"
-git push --follow-tags "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:${GITHUB_BASE_REF}
+git push --follow-tags "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:${GITHUB_HEAD_REF}
 
 
 echo "\nEnd of Action\n\n"
