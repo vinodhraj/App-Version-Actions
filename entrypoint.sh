@@ -13,12 +13,14 @@ echo "Git Event Name: ${GITHUB_EVENT_NAME}"
 #cat ${GITHUB_EVENT_PATH}
 
 #([ -z "$GITHUB_ONLY_ON_COMMIT" ]) || exit 0
+
 github_ref=""
 if [[ "$GITHUB_HEAD_REF" == ""]]; then
     github_ref=${GITHUB_REF}
 else
     github_ref=${GITHUB_HEAD_REF}
 fi
+echo "Git ref: $github_ref  ::  ${GITHUB_REF}"
 
 
 echo "\nStarting Git Operations"
