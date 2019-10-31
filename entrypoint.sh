@@ -15,12 +15,13 @@ echo "Git Event Name: ${GITHUB_EVENT_NAME}"
 #([ -z "$GITHUB_ONLY_ON_COMMIT" ]) || exit 0
 
 github_ref=""
-if [[ "$GITHUB_HEAD_REF" == ""]]; then
-    github_ref=$GITHUB_REF
+if [[ "${GITHUB_HEAD_REF}" == ""]]; then
+    github_ref=${GITHUB_REF}
 else
-    github_ref=$GITHUB_HEAD_REF
+    github_ref=${GITHUB_HEAD_REF}
 fi
-echo "Git ref: $github_ref  ::  ${GITHUB_REF}"
+echo "Git ref: $github_ref  ::  ${GITHUB_REF}  :: $GITHUB_REF"
+echo "Git head ref: $github_ref  ::  ${GITHUB_HEAD_REF}  :: $GITHUB_HEAD_REF"
 
 
 echo "\nStarting Git Operations"
