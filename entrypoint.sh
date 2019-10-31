@@ -14,6 +14,10 @@ echo "Git Event Name: ${GITHUB_EVENT_NAME}"
 
 #([ -z "$GITHUB_ONLY_ON_COMMIT" ]) || exit 0
 
+echo "\nStarting Git Operations"
+git config --global user.email "MobileAppVersioner@github-action.com"
+git config --global user.name "Mobile App Versioner"
+
 github_ref=""
 
 if test "${GITHUB_EVENT_NAME}" = "push"
@@ -23,18 +27,14 @@ then
 else
     echo "Not push event"
     github_ref=${GITHUB_HEAD_REF}
+    git checkout $github_ref
 fi
 echo "Git ref: $github_ref  ::  ${GITHUB_REF}  :: $GITHUB_REF"
 echo "Git head ref: $github_ref  ::  ${GITHUB_HEAD_REF}  :: $GITHUB_HEAD_REF"
 
-
-echo "\nStarting Git Operations"
-git config --global user.email "MobileAppVersioner@github-action.com"
-git config --global user.name "Mobile App Versioner"
-
 echo "Git Checkout"
-git pull --commit --no-edit https://${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-git checkout $github_ref
+#git pull --commit --no-edit https://${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+
 
 if test -f $file_name; then
     content=$(cat $file_name)
