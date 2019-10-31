@@ -13,6 +13,11 @@ cat ${GITHUB_EVENT_PATH}
 
 ([ -z "$GITHUB_ONLY_ON_COMMIT" ]) || exit 0
 
+echo "\nStarting Git Operations"
+git config --global user.email "MobileAppVersioner@github-action.com"
+git config --global user.name "Mobile App Versioner"
+
+echo "Git Checkout"
 git pull --commit --no-edit https://${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
 git checkout ${GITHUB_HEAD_REF}
 
@@ -70,15 +75,13 @@ newcontent=$(echo ${content/$oldver/$newver})
 
 echo $newcontent > $file_name
 
-echo "\nStarting Git Operations"
-git config --global user.email "MobileAppVersioner@github-action.com"
-git config --global user.name "Mobile App Versioner"
-
+echo "Git Add & Commit"
 git add -A 
 git commit -m "Incremented to ${newver}"  -m "[skip ci]"
 ([ -n "$tag_version" ] && [ "$tag_version" = "true" ]) && (git tag -a "${newver}" -m "[skip ci]") || echo "No tag created"
 
 git show-ref
+echo "Git Push"
 git push --follow-tags "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:${GITHUB_BASE_REF}
 
 
