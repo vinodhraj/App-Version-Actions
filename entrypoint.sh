@@ -51,7 +51,7 @@ echo "File Content: $content"
 #awk '/(v|ver|version|V|VER|VERSION)?([0-9]{1,2})+[.]+([0-9]{1,2})+[.]+([0-9]{1,3})|[.]+([0-9]{1,3})$/{print $0}' version
 #echo "$ver" | grep "(v|ver|version|V|VER|VERSION)?([0-9]{1,2})+[.]+([0-9]{1,2})+[.]+([0-9]{1,3})|[.]+([0-9]{1,3})*$")
 
-extract_string=$(echo $content | awk '/^([[:space:]])*(v|ver|version|V|VER|VERSION)?([[:blank:]])*([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{1,3})(\.([0-9]{1,3}))?[[:space:]]*$/{print $0}')
+extract_string=$(echo $content | awk '/^([[:space:]])*(v|ver|version|V|VER|VERSION)?([[:blank:]])*([0-9]{1,2})\.([0-9]{1,2})\.([0-9]{1,3})(\.([0-9]{1,5}))?[[:space:]]*$/{print $0}')
 echo "Extracted string: $extract_string"
 
 
