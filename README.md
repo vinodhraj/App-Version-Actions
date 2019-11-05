@@ -30,7 +30,7 @@ VERSION 1.2.4.55
 
 ```
 name: App Version Actions
-on: [push, pull_request]
+on: [push, pull_request]  # Recommended to use either of one event
 
 jobs:
   Version-check:
